@@ -2,9 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 
-var fs = require("fs");
-var https = require("https");
-
 const logger = require("./app/middleware/logger");
 
 const app = express();
@@ -56,21 +53,9 @@ require("./app/routes/rules/tdt_rule.routes")(app);
 require("./app/routes/file.routes")(app);
 
 // set port, listen for requests
-//const PORT = process.env.PORT || 8081;
-//app.listen(PORT, () => {
-//  logger.debug(`Server is running on port ${PORT}.`);
-//});
+const PORT = 8081;
+app.listen(PORT, () => {
+  logger.debug(`Server is running on port ${PORT}.`);
+});
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync("server.key"),
-      cert: fs.readFileSync("server.cert"),
-    },
-    app
-  )
-  .listen(8081, function () {
-    console.log(
-      "Example app listening on port 3000! Go to https://localhost:3000/"
-    );
-  });
+
